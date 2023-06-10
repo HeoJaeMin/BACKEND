@@ -1,5 +1,7 @@
 package task.jmheo.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,11 +17,12 @@ public class ProdSell {
 	// 상품 코드
 	private String prodCd;
 
-	@Column(name = "PROD_SELL")
+	@Column(name = "SELL_CNT")
 	// 판매량
-	private Long prodSell;
-	
-	@OneToOne(mappedBy="prodSell")
+	private Long sellCnt;
+
+	@JsonIgnore//Jackson 순환참조 방지
+	@OneToOne(mappedBy = "prodSell")
 	private Prod prod;
 
 	public String getProdCd() {
@@ -30,18 +33,27 @@ public class ProdSell {
 		this.prodCd = prodCd;
 	}
 
-	public Long getProdSell() {
-		return prodSell;
+	public Long getSellCnt() {
+		return sellCnt;
 	}
 
-	public void setProdSell(Long prodSell) {
-		this.prodSell = prodSell;
+	public void setSellCnt(Long sellCnt) {
+		this.sellCnt = sellCnt;
 	}
 
-	public ProdSell(String prodCd, Long prodSell) {
+	public Prod getProd() {
+		return prod;
+	}
+
+	public void setProd(Prod prod) {
+		this.prod = prod;
+	}
+
+	public ProdSell(String prodCd, Long sellCnt, Prod prod) {
 		super();
 		this.prodCd = prodCd;
-		this.prodSell = prodSell;
+		this.sellCnt = sellCnt;
+		this.prod = prod;
 	}
 
 	public ProdSell() {
@@ -50,7 +62,7 @@ public class ProdSell {
 
 	@Override
 	public String toString() {
-		return "ProdSell [prodCd=" + prodCd + ", prodSell=" + prodSell + "]";
+		return "ProdSell [prodCd=" + prodCd + ", sellCnt=" + sellCnt + ", prod=" + prod + "]";
 	}
 
 }

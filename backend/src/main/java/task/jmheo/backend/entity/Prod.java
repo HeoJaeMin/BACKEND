@@ -1,5 +1,7 @@
 package task.jmheo.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -39,17 +41,20 @@ public class Prod {
 	// 사용여부
 	private String useYn;
 
+	@JsonIgnore//Jackson 순환참조 방지
 	@ManyToOne
 	@JoinColumn(name = "BRAND_CD", insertable=false, updatable=false)
 	private Brand brand;
 
+	@JsonIgnore//Jackson 순환참조 방지
 	@OneToOne
 	@JoinColumn(name = "PROD_CD")
 	private ProdSell prodSell;
 
 	@Override
 	public String toString() {
-		return "Prod [prodCd=" + prodCd + ", prodNm=" + prodNm + ", prodDvsCd=" + prodDvsCd + ", brandCd=" + brandCd
+		return "Prod [prodCd="
+				+ prodCd + ", prodNm=" + prodNm + ", prodDvsCd=" + prodDvsCd + ", brandCd=" + brandCd
 				+ ", useYn=" + useYn + ", brand=" + brand + ", prodSell=" + prodSell + "]";
 	}
 

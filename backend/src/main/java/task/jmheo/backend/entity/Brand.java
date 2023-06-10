@@ -3,6 +3,8 @@ package task.jmheo.backend.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -32,7 +34,8 @@ public class Brand {
 	// 사용여부
 	private String useYn;
 
-	@OneToMany(mappedBy = "brand")
+	@JsonIgnore//Jackson 순환참조 방지
+	@OneToMany(mappedBy="brand")
 	private List<Prod> prod = new ArrayList<>();
 
 	public String getBrandCd() {
@@ -59,11 +62,20 @@ public class Brand {
 		this.useYn = useYn;
 	}
 
-	public Brand(String brandCd, String brandNm, String useYn) {
+	public List<Prod> getProd() {
+		return prod;
+	}
+
+	public void setProd(List<Prod> prod) {
+		this.prod = prod;
+	}
+
+	public Brand(String brandCd, String brandNm, String useYn, List<Prod> prod) {
 		super();
 		this.brandCd = brandCd;
 		this.brandNm = brandNm;
 		this.useYn = useYn;
+		this.prod = prod;
 	}
 
 	public Brand() {
