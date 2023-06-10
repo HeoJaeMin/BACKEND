@@ -3,6 +3,7 @@ package task.jmheo.backend.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +18,9 @@ public class ProdSell {
 	@Column(name = "PROD_SELL")
 	// 판매량
 	private Long prodSell;
+	
+	@OneToOne(mappedBy="prodSell")
+	private Prod prod;
 
 	public String getProdCd() {
 		return prodCd;

@@ -3,12 +3,16 @@ package task.jmheo.backend.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "PROD")
 /**
  * 상품 정보
+ * 
  * @author Heo
  *
  */
@@ -16,29 +20,37 @@ public class Prod {
 
 	@Id
 	@Column(name = "PROD_CD")
-	//상품 코드
+	// 상품 코드
 	private String prodCd;
 
 	@Column(name = "PROD_NM")
-	//상품명
+	// 상품명
 	private String prodNm;
 
 	@Column(name = "PROD_DVS_CD")
-	//상품구분코드
+	// 상품구분코드
 	private String prodDvsCd;
 
 	@Column(name = "BRAND_CD")
-	//브랜드 코드
+	// 브랜드 코드
 	private String brandCd;
 
 	@Column(name = "USE_YN")
-	//사용여부
+	// 사용여부
 	private String useYn;
+
+	@ManyToOne
+	@JoinColumn(name = "BRAND_CD", insertable=false, updatable=false)
+	private Brand brand;
+
+	@OneToOne
+	@JoinColumn(name = "PROD_CD")
+	private ProdSell prodSell;
 
 	@Override
 	public String toString() {
 		return "Prod [prodCd=" + prodCd + ", prodNm=" + prodNm + ", prodDvsCd=" + prodDvsCd + ", brandCd=" + brandCd
-				+ ", useYn=" + useYn + "]";
+				+ ", useYn=" + useYn + ", brand=" + brand + ", prodSell=" + prodSell + "]";
 	}
 
 	public String getProdCd() {
@@ -81,18 +93,36 @@ public class Prod {
 		this.useYn = useYn;
 	}
 
-	public Prod() {
-		super();
-		// TODO Auto-generated constructor stub
+	public Brand getBrand() {
+		return brand;
 	}
 
-	public Prod(String prodCd, String prodNm, String prodDvsCd, String brandCd, String useYn) {
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+
+	public ProdSell getProdSell() {
+		return prodSell;
+	}
+
+	public void setProdSell(ProdSell prodSell) {
+		this.prodSell = prodSell;
+	}
+
+	public Prod(String prodCd, String prodNm, String prodDvsCd, String brandCd, String useYn, Brand brand,
+			ProdSell prodSell) {
 		super();
 		this.prodCd = prodCd;
 		this.prodNm = prodNm;
 		this.prodDvsCd = prodDvsCd;
 		this.brandCd = brandCd;
 		this.useYn = useYn;
+		this.brand = brand;
+		this.prodSell = prodSell;
+	}
+
+	public Prod() {
+		super();
 	}
 
 }

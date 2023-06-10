@@ -19,7 +19,6 @@ public class ProdDvs {
 	// 상품 구분 명 ex) 01-패션, 0101-남성용, 0102-여성용, 0103-공용
 	private String prodDvsNm;
 
-	@Id
 	@Column(name = "PARE_PROD_DVS_CD")
 	// 부모 상품 구분 코드 명 ex) 0101의 부모 상품 구분 코드 = 01
 	private String pareProdDvsCd;
