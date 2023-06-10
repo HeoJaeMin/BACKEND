@@ -16,7 +16,7 @@ public class ProdDvs {
 	private String prodDvsCd;
 
 	@Column(name = "PROD_DVS_NM")
-	// 상품 구분 명 ex) 01-패션, 0101-남성용, 0102-여성용, 0103-공용
+	// 상품 구분 명 ex) 01-패션, 0101-가방, 0102-신발, 0103-옷
 	private String prodDvsNm;
 
 	@Column(name = "PARE_PROD_DVS_CD")
