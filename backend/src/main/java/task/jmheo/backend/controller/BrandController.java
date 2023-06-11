@@ -2,12 +2,14 @@ package task.jmheo.backend.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.EntityNotFoundException;
 import task.jmheo.backend.dto.BrandTop;
 import task.jmheo.backend.entity.Prod;
 import task.jmheo.backend.service.BrandService;
@@ -28,7 +30,12 @@ public class BrandController {
 	 */
 	@GetMapping("/prods")
 	public ResponseEntity<List<Prod>> prods(@RequestParam(name = "target") String target) {
-		return service.prods(target);
+		try {
+			return new ResponseEntity<>(service.prods(target), HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
+
 	}
 
 	/**
@@ -36,6 +43,11 @@ public class BrandController {
 	 */
 	@GetMapping("/top")
 	public ResponseEntity<List<BrandTop>> top(@RequestParam(name = "limit") String limit) {
-		return service.top(limit);
+		try {
+			return new ResponseEntity<>(service.top(limit), HttpStatus.OK);
+		} catch (NumberFormatException e) {
+			return ResponseEntity.badRequest().build();
+		}
+
 	}
 }
