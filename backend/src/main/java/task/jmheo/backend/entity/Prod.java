@@ -67,7 +67,7 @@ public class Prod {
 	@JoinColumn(name = "PROD_CD")
 	private ProdSell prodSell;
 
-	@JsonIgnore
+	@JsonIgnore // Jackson 순환참조 방지
 	@ManyToOne
 	@JoinColumn(name = "FAS_DVS_CD", insertable = false, updatable = false)
 	@Where(clause = "FAS_DVS_CD IS NOT NULL")
