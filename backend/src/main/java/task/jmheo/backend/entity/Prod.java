@@ -37,6 +37,9 @@ public class Prod {
 	// 상품구분코드
 	private String prodDvsCd;
 
+	@Transient
+	private String prodDvsNm;
+
 	@Column(name = "FAS_DVS_CD")
 	private String fasDvsCd;
 
@@ -73,6 +76,11 @@ public class Prod {
 	@Where(clause = "FAS_DVS_CD IS NOT NULL")
 	private FasDvs fasDvs;
 
+	@JsonIgnore // Jackson 순환참조 방지
+	@ManyToOne
+	@JoinColumn(name = "PROD_DVS_CD", insertable = false, updatable = false)
+	private ProdDvs prodDvs;
+
 	@PostLoad
 	private void onLoad() {
 		if (prodSell != null) {
@@ -85,6 +93,10 @@ public class Prod {
 
 		if (fasDvs != null) {
 			this.fasDvsNm = fasDvs.getFasDvsNm();
+		}
+
+		if (prodDvs != null) {
+			this.prodDvsNm = prodDvs.getProdDvsNm();
 		}
 	}
 
@@ -184,12 +196,30 @@ public class Prod {
 		this.fasDvsNm = fasDvsNm;
 	}
 
-	public Prod(String prodCd, String prodNm, String prodDvsCd, String fasDvsCd, String brandCd, String brandNm,
-			String fasDvsNm, Long sellCnt, String useYn, Brand brand, ProdSell prodSell, FasDvs fasDvs) {
+	public String getProdDvsNm() {
+		return prodDvsNm;
+	}
+
+	public void setProdDvsNm(String prodDvsNm) {
+		this.prodDvsNm = prodDvsNm;
+	}
+
+	public ProdDvs getProdDvs() {
+		return prodDvs;
+	}
+
+	public void setProdDvs(ProdDvs prodDvs) {
+		this.prodDvs = prodDvs;
+	}
+
+	public Prod(String prodCd, String prodNm, String prodDvsCd, String prodDvsNm, String fasDvsCd, String brandCd,
+			String brandNm, String fasDvsNm, Long sellCnt, String useYn, Brand brand, ProdSell prodSell, FasDvs fasDvs,
+			ProdDvs prodDvs) {
 		super();
 		this.prodCd = prodCd;
 		this.prodNm = prodNm;
 		this.prodDvsCd = prodDvsCd;
+		this.prodDvsNm = prodDvsNm;
 		this.fasDvsCd = fasDvsCd;
 		this.brandCd = brandCd;
 		this.brandNm = brandNm;
@@ -199,6 +229,7 @@ public class Prod {
 		this.brand = brand;
 		this.prodSell = prodSell;
 		this.fasDvs = fasDvs;
+		this.prodDvs = prodDvs;
 	}
 
 	public Prod() {

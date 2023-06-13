@@ -1,8 +1,14 @@
 package task.jmheo.backend.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +32,10 @@ public class ProdDvs {
 	@Column(name = "USE_YN")
 	// 사용여부
 	private String useYn;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="prodDvs")
+	private List<Prod> prod = new ArrayList<>();
 
 	public String getProdDvsCd() {
 		return prodDvsCd;
