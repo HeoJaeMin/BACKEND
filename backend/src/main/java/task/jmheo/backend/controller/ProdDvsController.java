@@ -15,23 +15,19 @@ import task.jmheo.backend.service.ProdDvsService;
 @RestController
 @RequestMapping("/prodDvs")
 public class ProdDvsController {
-	
+
 	ProdDvsService serv;
-	
-	
 
 	public ProdDvsController(ProdDvsService serv) {
 		super();
 		this.serv = serv;
 	}
 
-
-
 	@GetMapping("/search")
-	public ResponseEntity<ProdDvs> search(@RequestParam(name="target")String target){
+	public ResponseEntity<ProdDvs> search(@RequestParam(name = "target") String target) {
 		try {
 			return new ResponseEntity<ProdDvs>(serv.search(target), HttpStatus.OK);
-		}catch(NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}

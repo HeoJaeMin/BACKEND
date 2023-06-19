@@ -38,8 +38,15 @@ public class BrandService {
 		if (brand == null || brand.getUseYn().equals("N")) {
 			throw new EntityNotFoundException();
 		}
+		
+		List<Prod> prods = brand.getProd();
+		
+		//판매량 높은순으로 정렬
+		prods.sort((o1, o2) -> {
+			return o2.getSellCnt().compareTo(o1.getSellCnt());
+		});
 
-		return brand.getProd();
+		return prods;
 	}
 
 	/**
@@ -54,6 +61,10 @@ public class BrandService {
 		List<BrandTop> res = BrandTop.getQuery(jq, conv).fetch();
 
 		return res;
+	}
+
+	public List<Brand> list() {
+		return repo.findAll();
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.persistence.EntityNotFoundException;
 import task.jmheo.backend.dto.BrandTop;
+import task.jmheo.backend.entity.Brand;
 import task.jmheo.backend.entity.Prod;
 import task.jmheo.backend.service.BrandService;
 
@@ -23,6 +24,11 @@ public class BrandController {
 	public BrandController(BrandService service) {
 		super();
 		this.service = service;
+	}
+
+	@GetMapping("/list")
+	public ResponseEntity<List<Brand>> list() {
+		return new ResponseEntity<List<Brand>>(service.list(), HttpStatus.OK);
 	}
 
 	/*
